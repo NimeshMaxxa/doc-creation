@@ -14,7 +14,7 @@ from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 
 ITERATIONS = 600_000
-SECRET_IMAGES = ["sig-prepared.png", "sig-authorized.png", "stamp.png"]
+SECRET_IMAGES = ["sig-prepared.png", "sig-authorized.png", "stamp.png", "sig-quote.png"]
 PUBLIC_FILES = ["logo.png", "Carlito-Regular.ttf", "Carlito-Bold.ttf"]
 
 def b64(b): return base64.b64encode(b).decode()
