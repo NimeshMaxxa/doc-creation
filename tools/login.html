@@ -42,6 +42,7 @@ button:disabled { opacity: .6; cursor: default; }
   <p class="err" id="err" role="alert"></p>
 </form>
 <script>
+(() => {
 const P = __PAYLOAD__;
 const KEY_STORE = "ffs-site-key";
 const unb64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
@@ -53,6 +54,9 @@ async function deriveKey(user, pw) {
 async function openWith(key) {
   const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(P.iv) }, key, unb64(P.data));
   const html = new TextDecoder().decode(plain);
+  // replace the page only once the login page has fully loaded, otherwise the browser
+  // adds the form below the login box instead of replacing it
+  if (document.readyState !== "complete") await new Promise((r) => addEventListener("load", r, { once: true }));
   document.open(); document.write(html); document.close();
 }
 (async () => {
@@ -80,6 +84,7 @@ document.getElementById("gate").addEventListener("submit", async (e) => {
     await openWith(key);
   } finally { btn.disabled = false; btn.textContent = "Open"; }
 });
+})();
 </script>
 </body>
 </html>
