@@ -1,0 +1,4 @@
+__pycache__/
+python/output/
+python/samples/
+.DS_Store
